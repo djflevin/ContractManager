@@ -1,0 +1,19 @@
+# Dockerfile.prisma
+
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY prisma/schema.prisma ./prisma/
+COPY package*.json ./
+
+RUN npm install
+RUN npx prisma generate
+# Apply migrations
+# Get URL from docker-compose.yml file
+
+COPY . .
+
+EXPOSE 4466
+
+CMD ["npm", "run", "prisma"]
